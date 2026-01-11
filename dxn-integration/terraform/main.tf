@@ -8,13 +8,21 @@ resource "azurerm_storage_account" "dxn_sa" {
   location                 = azurerm_resource_group.dxn_rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+
+  depends_on = [
+    azurerm_resource_group.dxn_rg
+  ]
 }
 resource "azurerm_service_plan" "dxn_plan" {
   name                = "asp-dxnb-new"
   resource_group_name = azurerm_resource_group.dxn_rg.name
   location            = azurerm_resource_group.dxn_rg.location
   os_type             = "Linux"
-  sku_name            = "Y1"
+  sku_name            = "B1"
+
+  depends_on = [
+    azurerm_resource_group.dxn_rg
+  ]
 }
 resource "azurerm_linux_function_app" "dxn_function" {
   name                       = var.function_app_name
@@ -33,4 +41,10 @@ resource "azurerm_linux_function_app" "dxn_function" {
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME = "python"
   }
+
+  depends_on = [
+    azurerm_service_plan.dxn_plan,
+    azurerm_storage_account.dxn_sa
+  ]
 }
+
