@@ -48,3 +48,29 @@ resource "azurerm_linux_function_app" "dxn_function" {
   ]
 }
 
+module "storage" {
+  source              = "./modules/storage"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+}
+
+module "databricks" {
+  source              = "./modules/databricks"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+}
+
+module "eventhub" {
+  source              = "./modules/eventhub"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+}
+
+module "iam" {
+  source                 = "./modules/iam"
+  resource_group_name    = var.resource_group_name
+  storage_account_id     = module.storage.storage_account_id
+  eventhub_namespace_id  = module.eventhub.namespace_id
+  databricks_principal   = module.databricks.workspace_principal_id
+  function_principal     = var.function_app_principal_id
+}

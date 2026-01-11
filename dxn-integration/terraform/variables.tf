@@ -8,6 +8,10 @@ variable "location" {
   description = "Azure region"
 }
 
+variable "function_app_principal_id" {
+  description = "Managed Identity of DXN-Integration Function App"
+}
+
 variable "function_app_name" {
   type        = string
 }
