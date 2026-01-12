@@ -10,10 +10,10 @@ output "storage_account_name" {
   value = module.storage.storage_account_name
 }
 
-output "databricks_workspace_url" {
-  value = module.databricks.workspace_url
-}
+#output "databricks_workspace_url" {
+#  value = module.databricks.workspace_url
+#}
 
-output "eventhub_name" {
-  value = module.eventhub.eventhub_name
-}
+#output "eventhub_name" {
+#  value = module.eventhub.eventhub_name
+#}
